@@ -1,0 +1,459 @@
+{% extends 'accounts/base.html' %} {% block title %}Patient{% endblock %}
+{% block content %}
+{% load crispy_forms_tags %}
+
+
+<a type="button" href="#top" class="goto-about" aria-label="Back to top" title="Back to top">Top</a>
+<div class="container mt-3 d-lg-none w-100" style="color:#858796">
+    <div class="card mb-3 w-100" style="height: fit-content;">
+        <div class="card-body">
+            <div class="d-flex flex-row justify-content-around align-items-center">
+                <img class="avatar " style="background-image: url('{{account.profile_pic.url}}');">
+                <div class="text-center lead" style="line-height: 0.2;padding: 0;">
+                    <p>Welcome</p>
+                    <hr>
+                    <h4 class="font-poppins" style="line-height: 0.2;padding: 0; ">{{account.first_name }}</h4>
+                </div>
+
+                <div class="btn-group  d-lg-none ">
+                    <button type="button" class="btn btn-secondary rounded" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <i class="fas fa-angle-down"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <a type="button" class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="dis-lg-block  col-12 mb-5 " style="color:#858796">
+    <div
+        class="container w-100 dis-lg-block flex-grow-1 d-flex flex-column flex-sm-row overflow-auto mt-3 scroll-bar-hide">
+        <div class="row flex-grow-sm-1 flex-grow-0 ">
+            <aside class="col-sm-3  mb-4 ">
+                <div
+                    class=" d-flex row border justify-content-evenly bg-light rounded-3 p-4 dis-ls-block scroll-bar-hide">
+                    <div class=" card   col-12  d-none d-lg-block scroll-bar-hide" style="height: fit-content;">
+                        <div class="card-body col-12 ">
+                            <div class="row  ">
+                                <div class="col-6">
+                                    <img class="avatar "
+                                        style="background-image: url('{{account.profile_pic.url}}'); width: 60px;height: 60px;">
+                                </div>
+                                <div class="text-center col-6 h5 lead" style="line-height: 0.2;padding: 0;">
+                                    <p>Welcome</p>
+                                    <hr>
+                                    <h5 class="  col-12" style="line-height: 0.2;">
+                                        <div class="row">
+                                            <div class="col-12"> {{account.first_name }}</div>
+                                        </div>
+                                    </h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 ">
+                        <style>
+                            .nav-pills .nav-link {
+                                color: gray;
+                            }
+                        </style>
+                        <ul class="nav nav-pills  w-100 flex-sm-column   flex-row mb-auto justify-content-around ">
+                            <li class="nav-item ">
+                                <button
+                                    class="nav-link d-flex flex-row mb-2 active btn-hover border text-left align-items-center w-100 px-1"
+                                    id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home"
+                                    type="button" role="tab" aria-controls="v-pills-home" aria-selected="true"><i
+                                        class=" fas fa-home mx-3 "></i><span class="d-none d-lg-block">Overview</span>
+                                </button>
+                            </li>
+                            <li class="nav-item">
+                                <button
+                                    class="nav-link d-flex flex-row mb-2 border text-left align-items-center w-100 px-1"
+                                    id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile"
+                                    type="button" role="tab" aria-controls="v-pills-profile" aria-selected="true"><i
+                                        class="fs-5 fas fa-user mx-3"></i><span class="d-none d-lg-block">Profile</span>
+                                </button>
+                            </li>
+                            <li class="nav-item">
+                                <button
+                                    class="nav-link d-flex flex-row mb-2 border text-left align-items-center w-100 px-1"
+                                    id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages"
+                                    type="button" role="tab" aria-controls="v-pills-message" aria-selected="true"><i
+                                        class="fs-5 fas fa-shopping-cart mx-3"></i><span
+                                        class="d-none d-lg-block  text-gray">Orders</span>
+                                </button>
+                            </li>
+                            <li class="nav-item">
+                                <button
+                                    class="nav-link d-flex flex-row mb-2 border text-left align-items-center w-100 px-1"
+                                    id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-settings"
+                                    type="button" role="tab" aria-controls="v-pills-settings" aria-selected="true"><i
+                                        class="fs-5 fas fa-file-invoice mx-3"></i><span
+                                        class="d-none d-lg-block">Payments</span>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class=" w-100  d-none d-lg-block">
+                        <a class=" btn text-white page-button  d-flex flex-row  border text-left align-items-center w-100"
+                            type="button" href="{% url 'logout' %}"><i class="fs-5 fas fa-gear mx-3 "></i><span
+                                class="	d-md-none d-lg-block">Logout</span> </a>
+                    </div>
+
+                </div>
+            </aside>
+
+            <div id="gen-info" class="tab-content col overflow-auto  scroll-bar-hide" id="v-pills-tabContent">
+                <div class="tab-pane fade show active scroll-bar-hide" id="v-pills-home" role="tabpanel"
+                    aria-labelledby="v-pills-home-tab">
+                    <div class="row">
+                        <div class="col-lg-8 col-sm-12 ">
+                            <div class="d-sm-flex align-items-center justify-content-between ">
+                                <h1 class="font-poppins">General Information</h1>
+                            </div>
+                            <hr>
+                            <div class="card-header border-0  bg-light mb-4">Latest RX : {{ current_rx.date_created}}
+                            </div>
+                            <div class="card card-body border-0  col-sm-12  table-responsive">
+                                <table class="table table-bordered text-center rounded-3" id="dataTable">
+                                    <thead>
+                                        <tr class="text-light bg-dark">
+                                            <th scope="col">#</th>
+                                            <th scope="col">RX</th>
+                                            <th scope="col"><small>Distance</small> VASC</th>
+                                            <th scope="col"><small>Distance</small> VACC</th>
+                                            <th scope="col"><small>Near</small> VASC</th>
+                                            <th scope="col"><small>Near</small> VACC</th>
+                                            <th scope="col">PHV</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr style="color:#858796">
+                                            <th scope="row" class="text-warning">OD</th>
+                                            <td id="td">{{current_rx.od_old_rx}}</td>
+                                            <td>{{current_rx.od_dist_vasc}}</td>
+                                            <td>{{current_rx.od_dist_vacc}}</td>
+                                            <td>{{current_rx.od_near_vasc}}</td>
+                                            <td>{{current_rx.od_near_vacc}}</td>
+                                            <td>{{current_rx.od_phv}}</td>
+                                        </tr>
+                                        <tr style="color:#858796">
+                                            <th scope="row" class="text-danger">OS</th>
+                                            <td>{{current_rx.os_old_rx}}</td>
+                                            <td>{{current_rx.os_dist_vasc}}</td>
+                                            <td>{{current_rx.os_dist_vacc}}</td>
+                                            <td>{{current_rx.os_near_vasc}}</td>
+                                            <td>{{current_rx.os_near_vacc}}</td>
+                                            <td>{{current_rx.os_phv}}</td>
+                                        </tr>
+                                        <tr style="color:#858796">
+                                            <th scope="row" class="text-success">OU</th>
+                                            <td>{{current_rx.ou_old_rx}}</td>
+                                            <td>{{current_rx.ou_dist_vasc}}</td>
+                                            <td>{{current_rx.ou_dist_vacc}}</td>
+                                            <td>{{current_rx.ou_near_vasc}}</td>
+                                            <td>{{current_rx.ou_near_vacc}}</td>
+                                            <td>{{current_rx.ou_phv}}</td>
+                                        </tr>
+                                    </tbody>
+
+                                </table>
+                            </div>
+
+                        </div>
+                        <div class="col-lg-4 col-sm-12">
+                            <div class="card  my-5">
+                                <figure class="text-center p-4">
+                                    <blockquote class="blockquote lead">
+                                        <p>A vision is not just a picture of what could be; it is an appeal to our
+                                            better selves, a
+                                            call to become something more.</p>
+                                    </blockquote>
+                                    <figcaption class="blockquote-footer">
+                                        Rosabeth Moss Kanter <cite title="Source Title">Vision</cite>
+                                    </figcaption>
+                                </figure>
+                            </div>
+                            <div class="card  my-5">
+                                <figure class="text-center pt-4">
+                                    <blockquote class="blockquote lead">
+                                        <p>Next Scheduled Visit:</p>
+                                    </blockquote>
+                                    <h3 class="emphasize">{{current_sched.date}}</h3>
+                                </figure>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                    <form enctype="multipart/form-data" method="POST">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class=" col-xl-8 overflow-auto" style="max-height: 70vh;">
+                                <div class="card card-body border-0 shadow mb-4 ">
+                                    <h2 class="h5 ">Profile</h2>
+                                    <p class="mb-4">Includes the Information of your Identity in the Company!</p>
+                                    <div class="row">
+                                        <div class="col-sm-4 mb-3">
+                                            <div>
+                                                <label>First Name</label>
+                                                <input class="form-control" id="first_name" type="text"
+                                                    value="{{account.first_name }}" readonly name="first_name">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4 mb-3">
+                                            <div>
+                                                <label>Middle Name</label>
+                                                <input class="form-control" id="last_name" type="text"
+                                                    value="{{account.middle_name }}" readonly name="middle_name">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4 mb-3">
+                                            <div>
+                                                <label>Last Name</label>
+                                                <input class="form-control" id="last_name" type="text"
+                                                    value="{{account.last_name }}" readonly name="last_name">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row align-items-center">
+                                        <div class="col-sm-4 mb-3">
+                                            <label for="birthday">Birthday</label>
+                                            <input class="form-control" id="last_name" readonly
+                                                placeholder="{{account.birthday }}" value="{{account.birthday }}"
+                                                type="text" name="birthday">
+
+                                        </div>
+                                        <div class="col-4 mb-3">
+                                            <label for="email">Gender</label>
+                                            <input class="form-control" id="gender" readonly value="{{account.gender }}"
+                                                type="text">
+                                        </div>
+                                        <div class="col-sm-4 mb-3">
+                                            <div>
+                                                <label for="first_name">Occupation</label>
+                                                <input class="form-control" id="first_name" type="text"
+                                                    value="{{account.occupation }}" placeholder="Farmer" readonly
+                                                    name="occupation">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <div class="form-group">
+                                                <label for="email">Email</label>
+                                                <input class="form-control" id="email" type="email"
+                                                    placeholder="name@company.com" value="{{ account.email }}" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <div class="form-group">
+                                                <label for="phone">Phone</label>
+                                                <input class="form-control" id="phone" type="text" name="phone" readonly
+                                                    value="{{ account.phone }}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card card-body border-0 shadow my-4">
+                                    <h2 class="h5 ">Location</h2>
+                                    <p class="mb-4">Includes the complete address on where you are currently residing!
+                                    </p>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <div class="form-group">
+                                                <label for="address">Street</label>
+                                                <input class="form-control" id="address" type="text" name="street"
+                                                    disabled value="{{ account.street }}"
+                                                    placeholder="Enter your Street">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 mb-3">
+                                            <div class="form-group">
+                                                <label for="number">Barangay</label>
+                                                <input class="form-control" id="number" type="text" name="barangay"
+                                                    disabled value="{{ account.barangay }}"
+                                                    placeholder="Enter your Barangay">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-9 mb-3">
+                                            <div class="form-group">
+                                                <label for="city">City</label>
+                                                <input class="form-control" id="city" type="text" name="city" disabled
+                                                    value="{{ account.city }}" placeholder="Enter your City">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label for="zip">ZIP</label>
+                                                <input class="form-control" id="zip" type="text" name="zip" disabled
+                                                    value="{{ account.zip }}" placeholder="ZIP">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-xl-4">
+                                <div class="row">
+                                    <div class="col-12 mb-4">
+                                        <div class="card shadow border-0 text-center p-0">
+                                            <div class="profile-cover rounded-top"
+                                                data-background="{{ ASSETS_ROOT }}/img/profile-cover.jpg">
+                                            </div>
+                                            <div class="card-body pb-5">
+
+                                                <h4 class="h3  text-center">
+                                                    {{account.first_name }} {{account.middle_name }}
+                                                    {{account.last_name}}
+                                                </h4>
+                                                <h5 class="fw-normal">
+                                                    {{ request.user.username }}
+                                                </h5>
+                                                <p class="text-gray mb-4">
+                                                    {{ account.email }}
+                                                </p>
+                                                <a class="btn btn-sm btn-gray-800 d-inline-flex align-items-center me-2"
+                                                    href="#">
+                                                    <svg class="icon icon-xs me-1" fill="currentColor"
+                                                        viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                        <path
+                                                            d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z">
+                                                        </path>
+                                                    </svg>
+                                                    Connect
+                                                </a>
+                                                <a class="btn btn-sm btn-secondary" href="#">Send Message</a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <hr>
+                        </div>
+                    </form>
+                </div>
+                <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+                    <h1 class=" font-poppins fs-1">Orders</h1>
+                    <hr>
+                    <div class="col-12 overflow-auto" style="max-height: 70vh;">
+                        <div class="row">
+                            {% for item in orders %}
+                            <div class="col-xl-6 col-md-6 mb-4">
+                                <div class="card border-left-warning shadow h-100 py-2">
+                                    <div class="card-body">
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col mr-2">
+                                                <div class="d-flex flex-row
+                                                justify-content-between">
+                                                    <div class="small w-50">{{item.date_created}}</div>
+                                                    {% if item.type == 'Glasses' %}
+                                                    <a type="button" class="btn btn-warning btn-sm text-light"
+                                                        href="{% url 'view_patient_order' item.id %}">View
+                                                        Delivery</a>
+                                                    {% endif %}
+
+                                                </div>
+                                                {% if item.type == 'Glasses' %}
+                                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                                    {{item.type}} - {{item.quantity}}</div>
+                                                {% else %}
+                                                <div
+                                                    class="text-xs font-weight-bold text-info text-uppercase mt-3 mb-1">
+                                                    {{item.type}} - {{item.quantity}}</div>
+                                                {% endif %}
+
+                                                <div class="d-flex flex-row
+                                                justify-content-between">
+                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">Price:<span
+                                                            class="mx-1 small">{{item.price}}</span></div>
+                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">Due:<span
+                                                            class="mx-1 small">{{item.due}}</span></div>
+
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
+                    <div class="row">
+                        <div class=" col-xl-9 overflow-auto" style="max-height: 70vh;">
+                            <div class="card shadow border-0 text-center p-0 mb-4">
+                                <div class="profile-cover rounded-top">
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>Order Id</th>
+                                                    <th>Remaining Due</th>
+                                                    <th>Amount Paid</th>
+                                                    <th>Description</th>
+                                                    <th>Date Created</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for billings in billings %}
+                                                <tr class="small text-center lh-1">
+                                                    <td>{{billings.order.id}}</td>
+                                                    <td>{{billings.remain_due}}</td>
+                                                    <td>{{billings.amount}}</td>
+                                                    <td>{{billings.description}}</td>
+                                                    <td>{{billings.date_created}}</td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-sm-12 col-xl-3">
+                            <div class="row">
+                                <div class="col-12 mb-4">
+                                    <div class="card shadow border-0 text-center p-0">
+                                        <div class="profile-cover rounded-top"
+                                            data-background="{{ ASSETS_ROOT }}/img/profile-cover.jpg">
+                                        </div>
+                                        <div class="card-body ">
+
+                                            <h4 class="h3  text-center">
+                                                {{total_due}}
+                                            </h4>
+                                            <hr>
+                                            <span class="lead p-0">Your total Due</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr id="consult" class="border-0 ">
+</div>
+{% include 'accounts/components/consultation.html' %}
+
+{% endblock %}

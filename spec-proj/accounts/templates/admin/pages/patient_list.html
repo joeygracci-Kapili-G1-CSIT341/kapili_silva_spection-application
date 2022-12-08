@@ -1,0 +1,69 @@
+{% extends 'admin/admin.html' %} {% block title %}Patients{% endblock %}
+{% block content %}
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Patients List</h1>
+    <a class="btn btn-primary" href="{% url 'register' %}" type="button">Register Patient</a>
+</div>
+<p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
+    For more information about DataTables, please visit the <a target="_blank" href="https://datatables.net">official
+        DataTables documentation</a>.</p>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+
+
+<!-- DataTales Example -->
+<div class="card shadow mb-4 border">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered text-center align-middle">
+                <thead>
+                    <tr>
+                        <th>User</th>
+                        <th>Last Name</th>
+                        <th>First Name</th>
+                        <th>Phone</th>
+                        <th>Email</th>
+
+                        <th class="text-center">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for patient in patients%}
+                    <tr class="small text-center lh-1">
+                        <td>{{patient.user}}</td>
+                        <td>{{patient.user.account.first_name}}</td>
+                        <td>{{patient.user.account.last_name}}</td>
+                        <td>{{patient.user.account.phone}}</td>
+                        <td>{{patient.user.email}}</td>
+
+                        <td class="text-center">
+                            <div class="dropdown no-arrow">
+                                <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink-{{order.id}}"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-h fa-lg fa-fw text-gray-400"></i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                    aria-labelledby="dropdownMenuLink-{{order.id}}">
+                                    <div class="dropdown-header">Action Dropdown: </div>
+                                    <a href="{% url 'person_info'  patient.id   %}" class="dropdown-item">View
+                                        Information</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a href="{% url 'delete_patient' patient.id %}" class="dropdown-item">Delete</a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#dataTable').DataTable();
+    });
+</script>
+{% endblock %}

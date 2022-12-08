@@ -1,0 +1,673 @@
+{% extends 'admin/admin.html' %} {% block title %}Schedule{% endblock %}
+{% block content %}
+{% load crispy_forms_tags %}
+
+
+
+<main class="my-5">
+    <form method="POST" class="needs-validation" novalidate>
+        {% csrf_token %}
+        <section class="my-5 vh-lg-100  mt-lg-0 bg-soft d-flex align-items-center">
+            <div class="container">
+                <div class="row justify-content-center form-bg-image">
+                    <div class="col-xl-9 d-flex align-items-center justify-content-center">
+                        <div
+                            class="signin-inner my-3 my-lg-0 bg-white shadow border-0 rounded p-4 p-lg-5 w-100 fmxw-500">
+                            <h1 class="h3">Create New Order!</h1>
+                            <p class="mb-4">Fill out the fields below!</p>
+
+                            <div class="row">
+                                <div class="col-sm-8 mb-3">
+                                    <label>User</label>
+                                    <select class="form-select" aria-label="Default select example" name="name"
+                                        required>
+                                        <option value="" selected>Unknown</option>
+                                        {% for name in patient %}
+                                        <option value="{{name}}">{{name.account.first_name}} {{name.account.last_name}}
+                                        </option>
+                                        {% endfor %}
+                                    </select>
+
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label for="validationCustom01" class="form-label">Date Created</label>
+                                    <input type="text" class="form-control" id="date_created" disabled>
+                                </div>
+                            </div>
+
+
+                            <div class="row align-items-center">
+                                <div class="col-sm-4 mb-3">
+                                    <label>Type</label>
+                                    <div class="input-group">
+                                        <label class="input-group-text" for="inputGroupSelect01">Type</label>
+                                        <select class="form-select" required name="type" id="formsel"
+                                            aria-label="Default select example">
+                                            <option selected>Choose</option>
+                                            <option value="Glasses">Glasses</option>
+                                            <option value="Product">Product</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-2 my-3">
+                                    <label for="address">Quantity</label>
+                                    <div class="form-group">
+                                        <input class="form-control" type="text" name="quantity" id="quantity" required
+                                            placeholder="ex. 10">
+                                    </div>
+
+                                </div>
+                                <div class="col-sm-6 mb-3">
+                                    <label for="price">Price per Item</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="basic-addon1"> &#8369;</span>
+                                        <input class="form-control" id="price" type="text" placeholder="5.00" required
+                                            name="price">
+                                        <div class="valid-feedback">
+                                            Looks good!
+                                        </div>
+                                        <div class="invalid-feedback">
+                                            Please input an amount!
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="vh-lg-100  mt-lg-0 bg-soft d-flex align-items-center">
+            <div id="product" class="mb-5  container" style="display: none;">
+                <div class="row justify-content-center form-bg-image">
+                    <div class="col-xl-9 d-flex align-items-center justify-content-center">
+                        <div class="signin-inner  my-lg-0 bg-white shadow border-0 rounded p-5  w-100 fmxw-500">
+                            <h2 class="h5 ">Product Information</h2>
+                            <div class="row">
+                                <div class="col-md-6 ">
+                                    <div class="form-group">
+                                        <label for="address">Brand Name</label>
+                                        <input class="form-control" type="text" name="brand_name"
+                                            placeholder="Enter Product Name">
+                                    </div>
+                                </div>
+                                <div class="col-md-6 "> <label for="inputGroupSelect01">Type</label>
+                                    <div class="input-group">
+
+                                        <select class="form-select" required name="brand_type" id="formsel"
+                                            aria-label="Default select example">
+                                            <option selected>Type</option>
+                                            <option value="Lens">Lens</option>
+                                            <option value="Cleanser">Cleanser</option>
+                                            <option value="Cleanser">Lens Cleaning CLoth</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class=" vh-lg-100  mt-lg-0 bg-soft d-flex align-items-center">
+            <div id="glasses" class="mb-5 container">
+                <div class="row justify-content-center form-bg-image">
+                    <div class="col-xl-9 d-flex align-items-center justify-content-center">
+                        <div class="signin-inner my-lg-0 bg-white shadow border-0 rounded p-4 p-lg-5 w-100 fmxw-500">
+                            <h2 class="h5 ">Order Information</h2>
+                            <div class="row">
+                                <div class="col-md-12 mb-3">
+                                    <div class="form-group">
+                                        <label for="address">Laboratory</label>
+                                        <input class="form-control" type="text" name="laboratory"
+                                            placeholder="Enter Date of Manufacturer">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
+                                    <div class="form-group">
+                                        <label>Date Sent</label>
+                                        <input class="form-control" type="date" name="sent">
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="form-group">
+                                        <label>Date Recieve</label>
+                                        <input class="form-control" type="date" name="recieve">
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="zip">Due Date</label>
+                                        <input class="form-control" type="date" name="due_date">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class=" vh-lg-100  mt-lg-0 bg-soft d-flex align-items-center">
+            <div id="dispense" class="mb-5 container" style="display: none;">
+                <div class="row justify-content-center form-bg-image">
+                    <div class="col-xl-9 d-flex align-items-center justify-content-center">
+                        <div
+                            class="signin-inner my-3 my-lg-0 bg-white shadow border-0 rounded p-4 p-lg-5 w-100 fmxw-500">
+                            <h1 class="h3">Dispense Information Record</h1>
+                            <div class="row">
+                                <div class="col-md-6 ">
+                                    <div class="form-group">
+                                        <label for="address">Organization</label>
+                                        <input class="form-control" type="text" name="organization"
+                                            placeholder="Enter Date of Manufacturer">
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-group">
+                                        <label>Address</label>
+                                        <input class="form-control" type="text" name="address">
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <h2 class="h5 ">Frame Specification</h2>
+                            <div class="row">
+                                <div class="col-md-4 ">
+                                    <div class="form-group">
+                                        <label>Manufacturer</label>
+                                        <input class="form-control" type="text" name="manufacturer">
+                                    </div>
+                                </div>
+                                <div class="col-md-4 ">
+                                    <div class="form-group">
+                                        <label>Style</label>
+                                        <input class="form-control" type="text" name="style">
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="zip">Color</label>
+                                        <input class="form-control" type="text" name="color">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class=" mb-3">
+                                        <div class="row">
+                                            <div class="col-md-5 text-right">
+                                                <label>A</label>
+                                                <div class="form-group">
+                                                    <input class="form-control" type="text" name="a_frame">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-1 ">
+                                                /
+                                            </div>
+                                            <div class="col-md-5 "> <label>DBL</label>
+                                                <div class="form-group">
+                                                    <input class="form-control" type="text" name="dbl_frame">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class=" mb-3">
+                                        <div class="row">
+                                            <div class="col-md-5 text-right">
+                                                <label class="text-right">B</label>
+                                                <div class="form-group">
+                                                    <input class="form-control" type="text" name="b_frame">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-1">
+                                                /
+                                            </div>
+                                            <div class="col-md-5 ">
+                                                <label>ED</label>
+                                                <div class="form-group">
+                                                    <input class="form-control" type="text" name="ed_frame">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="col-12 mx-2">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-group my-0">
+                                                    <input class="form-check-input" type="checkbox" name="frame_1_50">
+                                                    <label class="form-check-label" for="exampleRadios2">
+                                                        1.50
+                                                    </label>
+                                                </div>
+                                                <div class="form-group my-0">
+
+                                                    <input class="form-check-input" type="checkbox" name="frame_Poly">
+                                                    <label class="form-check-label" for="exampleRadios2">
+                                                        Poly
+                                                    </label>
+                                                </div>
+                                                <div class="form-group my-0">
+                                                    <input class="form-check-input" type="checkbox" name="frame_1_60">
+                                                    <label class="form-check-label" for="exampleRadios2">
+                                                        1.60
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group my-0">
+                                                    <input class="form-check-input" type="checkbox" name="frame_1_67">
+                                                    <label class="form-check-label" for="exampleRadios2">
+                                                        1.67
+                                                    </label>
+                                                </div>
+                                                <div class="form-group my-0">
+                                                    <input class="form-check-input" type="checkbox" name="frame_1_74">
+                                                    <label class="form-check-label" for="exampleRadios2">
+                                                        1.74
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 mt-3">
+                                                <div class="form-group">
+                                                    <input class="form-control" type="text" placeholder="Other"
+                                                        name="other">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-6">
+                                    <label>PD</label>
+                                    <div class="col-md-12 mb-3">
+                                        <div class="row">
+                                            <label>Distance</label>
+                                            <div class="col-md-5 ">
+                                                <div class="form-group">
+                                                    <input class="form-control" type="text" name="dis_num">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-1 ">
+                                                <div class="form-group">
+                                                    <h3>/</h3>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-5 ">
+                                                <div class="form-group">
+                                                    <input class="form-control" type="text" name="dis_deno">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-12 mb-3">
+                                        <div class="row">
+                                            <label>Near</label>
+                                            <div class="col-md-5 ">
+                                                <div class="form-group">
+                                                    <input class="form-control" type="text" name="near_num">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-1">
+                                                <div class="form-group">
+                                                    <h3>/</h3>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-5 ">
+                                                <div class="form-group">
+                                                    <input class="form-control" type="text" name="near_deno">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-6">
+                                    <label>Coatings</label>
+                                    <div class="mx-3">
+                                        <div class="form-group my-0">
+                                            <input class="form-check-input" type="checkbox" name="uv400">
+                                            <label class="form-check-label" for="exampleRadios2">
+                                                UV400
+                                            </label>
+                                        </div>
+                                        <div class="form-group my-0">
+
+                                            <input class="form-check-input" type="checkbox" name="anti_scratch">
+                                            <label class="form-check-label" for="exampleRadios2">
+                                                Anti-Scratch
+                                            </label>
+                                        </div>
+                                        <div class="form-group my-0">
+                                            <input class="form-check-input" type="checkbox" name="anti_reflective">
+                                            <label class="form-check-label" for="exampleRadios2">
+                                                Anti-Reflective
+                                            </label>
+                                        </div>
+                                        <div class="form-group my-0">
+                                            <input class="form-check-input" type="checkbox" name="blue_block">
+                                            <label class="form-check-label" for="exampleRadios2">
+                                                Blue-block
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <table class="table table-bordered text-center col-12">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Sphere</th>
+                                            <th scope="col">Cyl</th>
+                                            <th scope="col">Axis</th>
+                                            <th scope="col">Prism/Base</th>
+                                            <th scope="col">Add</th>
+                                            <th scope="col">Height</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">OD</th>
+                                            <td> <input class="form-control border border-0" type="text"
+                                                    name="od_sphere"></td>
+                                            <td> <input class="form-control border border-0" type="text" name="od_cyl">
+                                            </td>
+                                            <td> <input class="form-control border border-0" type="text" name="od_axis">
+                                            </td>
+                                            <td> <input class="form-control border border-0" type="text"
+                                                    name="od_prism_b"></td>
+                                            <td> <input class="form-control border border-0" type="text" name="od_add">
+                                            </td>
+                                            <td> <input class="form-control border border-0" type="text"
+                                                    name="od_height"></td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">OS</th>
+                                            <td> <input class="form-control border border-0" type="text"
+                                                    name="os_sphere"></td>
+                                            <td> <input class="form-control border border-0" type="text" name="os_cyl">
+                                            </td>
+                                            <td> <input class="form-control border border-0" type="text" name="os_axis">
+                                            </td>
+                                            <td> <input class="form-control border border-0" type="text"
+                                                    name="os_prism_b"></td>
+                                            <td> <input class="form-control border border-0" type="text" name="os_add">
+                                            </td>
+                                            <td> <input class="form-control border border-0" type="text"
+                                                    name="os_height"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Tint</label>
+                                        <input class="form-control" type="text" name="tint">
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div>
+                                            <div class="form-group">
+                                                <label>SV</label>
+                                                <input class="form-control" type="text" name="sv">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="form-group">
+                                                <label>Bifocal Style</label>
+                                                <input class="form-control" type="text" name="bifocal">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="form-group">
+                                                <label>Progressive</label>
+                                                <input class="form-control" type="text" name="progressive">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div>
+                                            <div class="form-group">
+                                                <label>Special Instruction</label>
+                                                <textarea class="form-control" type="text" rows="8"
+                                                    name="instruction"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="my-5 vh-lg-100  mt-lg-0 bg-soft d-flex align-items-center">
+            <div class="container">
+                <div class="row justify-content-center form-bg-image">
+                    <div class="col-xl-9 d-flex align-items-center justify-content-center">
+                        <button type="button" class="btn btn-primary col-xl-12" data-bs-toggle="modal"
+                            data-bs-target="#staticBackdrop">
+                            Create New Order
+                        </button>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Payment</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="address">Total Price</label>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon1"> &#8369;</span>
+                                    <input class="form-control" type="text" readonly placeholder="Price" id="get_price">
+                                </div>
+                            </div>
+                            <div class="col-md-6 ">
+                                <label for="address">Due</label>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon1">Due</span>
+                                    <input class="form-control" type="text" name="due" placeholder="Due" readonly
+                                        id="due">
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label for="address">Amount</label>
+                                <div class="input-group ">
+                                    <span class="input-group-text" id="basic-addon1"> &#8369;</span>
+                                    <input class="form-control" type="text" name="amount" id="amount"
+                                        placeholder="Enter Amount to Pay">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer ">
+                        <div class="row col-12">
+                            <div class="col-md-6">
+                                <button type="button" class="btn btn-outline-secondary col-md-12"
+                                    data-bs-dismiss="modal">Close</button>
+                            </div>
+                            <div class="col-md-6">
+                                <button type="submit" class="btn btn-primary col-md-12"> Create New Order</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </form>
+</main>
+<script>
+    (function () {
+        'use strict'
+
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.querySelectorAll('.needs-validation')
+
+        // Loop over them and prevent submission
+        Array.prototype.slice.call(forms)
+            .forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+
+                    form.classList.add('was-validated')
+                }, false)
+            })
+    })()
+    $('#staticBackdrop').on('hide.bs.modal', function (e) {
+        const amount = document.getElementById("amount");
+        const due = document.getElementById("due");
+        amount.value = 0;
+        due.value = 0;
+    })
+    function getPrice() {
+        const price = document.getElementById("price");
+        const get_price = document.getElementById("get_price");
+        const quantity = document.getElementById("quantity");
+        const due = document.getElementById("due");
+
+        const inputHandler = function (e) {
+            get_price.value = price.value * quantity.value;
+        }
+
+        price.addEventListener('input', inputHandler);
+        price.addEventListener('propertychange', inputHandler);
+        quantity.addEventListener('input', inputHandler);
+        quantity.addEventListener('propertychange', inputHandler);
+        due.addEventListener('input', inputHandler);
+        due.addEventListener('propertychange', inputHandler);
+    }
+    function getDue() {
+        const due = document.getElementById("due");
+        const amount = document.getElementById("amount");
+        const get_price = document.getElementById("get_price");
+
+        var due_value;
+        const inputHandler = function (e) {
+            due_value = get_price.value - amount.value
+            due.value = due_value;
+        }
+
+        amount.addEventListener('input', inputHandler);
+        amount.addEventListener('propertychange', inputHandler);
+        get_price.addEventListener('input', inputHandler);
+        get_price.addEventListener('propertychange', inputHandler);
+        due.addEventListener('input', inputHandler);
+        due.addEventListener('propertychange', inputHandler);
+    }
+    function getToday() {
+        const get_date = document.getElementById("date_created");
+        var utc = new Date().toLocaleDateString();
+        console.log(utc);
+        get_date.value = utc;
+    }
+    getPrice()
+    getDue()
+    getToday()
+
+    $("#glasses").css({ display: "none", visibility: "hidden" });
+    $("#product").css({
+        display: "none",
+        visibility: "hidden"
+    });
+    $("#formsel").change(function () {
+        var selectedText = $("#formsel option:selected").text()
+        if (selectedText == 'Glasses') {
+            $("#glasses").css({
+                display: "block",
+                visibility: "visible"
+            });
+            $("#dispense").css({
+                display: "block",
+                visibility: "visible"
+            });
+            $("#product").css({
+                display: "none",
+                visibility: "hidden"
+            });
+        } else if (selectedText == 'Product') {
+            $("#product").css({
+                display: "block",
+                visibility: "visible"
+            });
+            $("#glasses").css({
+                display: "none",
+                visibility: "hidden"
+            });
+            $("#dispense").css({
+                display: "none",
+                visibility: "hidden"
+            });
+        } else {
+            $("#glasses").css({
+                display: "none",
+                visibility: "hidden"
+            });
+            $("#dispense").css({
+                display: "none",
+                visibility: "hidden"
+            });
+            $("#product").css({
+                display: "none",
+                visibility: "hidden"
+            });
+        }
+    });
+
+    document.querySelector("#search-input").addEventListener('input', filterList);
+    function filterList() {
+        const searchInput = document.querySelector("#search-input");
+        const filter = searchInput.value.toLowerCase();
+        const listItems = document.querySelectorAll('.item');
+
+        listItems.forEach((item) => {
+            let text = item.textContent
+            if (text.toLowerCase().includes(filter.toLowerCase())) {
+                item.style.display = '';
+            } else {
+                item.style.display = 'none';
+            }
+            item.addEventListener("click", function () { myClick() });
+        });
+    }
+
+    function myClick(x) {
+
+        alert($('.num-' + '{{patient.id}}').text())
+    }
+
+</script>
+{% endblock %}

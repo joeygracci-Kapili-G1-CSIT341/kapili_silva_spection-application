@@ -1,0 +1,658 @@
+{% extends 'admin/admin.html' %} {% block title %}Schedule{% endblock %}
+{% block content %}
+{% load crispy_forms_tags %}
+
+
+
+<main class="my-5">
+    <form method="POST" class="needs-validation" novalidate>
+        {% csrf_token %}
+        <section class="my-5 vh-lg-100  mt-lg-0 bg-soft d-flex align-items-center">
+            <div class="container">
+                <div class="row justify-content-center form-bg-image">
+                    <div class="col-xl-9 d-flex align-items-center justify-content-center">
+                        <div
+                            class="signin-inner my-3 my-lg-0 bg-white shadow border-0 rounded p-4 p-lg-5 w-100 fmxw-500">
+
+                            <div class="d-flex justify-content-between">
+                                <h1 class="h3">Order Information!</h1>
+                                <div class="col-md-4">
+                                    <input type="text" class="form-control" disabled value="{{order.date_created}}">
+                                </div>
+                            </div>
+                            <hr>
+                            <p class="mb-4"></p>
+
+                            <div class="row">
+                                <div class="col-sm-4 mb-3">
+                                    <label for="validationCustom01" class="form-label">Firstname</label>
+                                    <input type="text" class="form-control" disabled
+                                        value="{{order.user.account.first_name}}">
+                                </div>
+                                <div class="col-sm-4 mb-3">
+                                    <label for="validationCustom01" class="form-label">Lastname</label>
+                                    <input type="text" class="form-control" disabled
+                                        value="{{order.user.account.last_name}}">
+                                </div>
+
+                                <div class="col-md-4">
+
+                                </div>
+                            </div>
+                            <div class="row align-items-center">
+                                <div class="col-sm-4 mb-3">
+                                    <label>Type</label>
+
+                                    <input type="text" id="order_type" class="form-control" value="{{order.type}}">
+
+                                </div>
+
+                                <div class="col-sm-4 mb-3">
+                                    <label for="price">Price</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="basic-addon1"> &#8369;</span>
+                                        <input class="form-control" id="price" type="text" placeholder="5.00" required
+                                            value="{{order.price}}">
+
+                                        <div class="invalid-feedback">
+                                            Please input an amount!
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4 mb-3">
+                                    <label for="price">Due</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="basic-addon1"> &#8369;</span>
+                                        <input class="form-control" id="price" type="text" placeholder="5.00" required
+                                            value="{{order.due}}">
+                                        <div class="valid-feedback">
+                                            Looks good!
+                                        </div>
+                                        <div class="invalid-feedback">
+                                            Please input an amount!
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="">
+                                <button type="button" class="btn btn-primary col-xl-12" data-bs-toggle="modal"
+                                    data-bs-target="#staticBackdrop">
+                                    Pay Due
+                                </button>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="vh-lg-100  mt-lg-0 bg-soft d-flex align-items-center">
+            <div id="product" class="mb-5  container">
+                <div class="row justify-content-center form-bg-image">
+                    <div class="col-xl-9 d-flex align-items-center justify-content-center">
+                        <div class="signin-inner  my-lg-0 bg-white shadow border-0 rounded p-5  w-100 fmxw-500">
+                            <h2 class="h5 ">Product Information</h2>
+                            <div class="row">
+                                <div class="col-md-12 ">
+                                    <div class="form-group">
+                                        <label for="address">Name</label>
+                                        <input class="form-control" type="text" name="laboratory"
+                                            placeholder="Enter Product Name">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class=" vh-lg-100  mt-lg-0 bg-soft d-flex align-items-center">
+            <div id="glasses" class="mb-5 container">
+                <div class="row justify-content-center form-bg-image">
+                    <div class="col-xl-9 d-flex align-items-center justify-content-center">
+                        <div class="signin-inner my-lg-0 bg-white shadow border-0 rounded p-4 p-lg-5 w-100 fmxw-500">
+                            <h2 class="h5 ">Order Information</h2>
+                            <div class="row">
+                                <div class="col-md-12 mb-3">
+                                    <div class="form-group">
+                                        <label for="address">Laboratory</label>
+                                        <input class="form-control" type="text" name="laboratory" value="{{laboratory}}"
+                                            placeholder="Enter Date of Manufacturer">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
+                                    <div class="form-group">
+                                        <label>Date Sent</label>
+                                        <input class="form-control" type="date" name="sent" value="{{sent}}">
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="form-group">
+                                        <label>Date Recieve</label>
+                                        <input class="form-control" type="date" name="recieve" value="{{recieve}}">
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="zip">Due Date</label>
+                                        <input class="form-control" type="date" name="due_date" value="{{due_date}}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class=" vh-lg-100  mt-lg-0 bg-soft d-flex align-items-center">
+            <div id="dispense" class="mb-5 container">
+                <div class="row justify-content-center form-bg-image">
+                    <div class="col-xl-9 d-flex align-items-center justify-content-center">
+                        <div
+                            class="signin-inner my-3 my-lg-0 bg-white shadow border-0 rounded p-4 p-lg-5 w-100 fmxw-500">
+                            <h1 class="h3">Dispense Information Record</h1>
+                            <div class="row">
+                                <div class="col-md-6 ">
+                                    <div class="form-group">
+                                        <label for="address">Organization</label>
+                                        <input class="form-control" type="text" name="organization"
+                                            value="{{organization}}" placeholder="Enter Date of Manufacturer">
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-group">
+                                        <label>Address</label>
+                                        <input class="form-control" type="text" name="address"
+                                            value="{{order.user.account.street}}">
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <h2 class="h5 ">Frame Specification</h2>
+                            <div class="row">
+                                <div class="col-md-4 ">
+                                    <div class="form-group">
+                                        <label>Manufacturer</label>
+                                        <input class="form-control" type="text" name="manufacturer"
+                                            value="{{manufacturer}}">
+                                    </div>
+                                </div>
+                                <div class="col-md-4 ">
+                                    <div class="form-group">
+                                        <label>Style</label>
+                                        <input class="form-control" type="text" name="style" value="{{style}}">
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="zip">Color</label>
+                                        <input class="form-control" type="text" name="color" value="{{color}}">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class=" mb-3">
+                                        <div class="row">
+                                            <div class="col-md-5 text-right">
+                                                <label>A</label>
+                                                <div class="form-group">
+                                                    <input class="form-control" type="text" name="a_frame"
+                                                        value="{{a_frame}}">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-1 ">
+                                                /
+                                            </div>
+                                            <div class="col-md-5 "> <label>DBL</label>
+                                                <div class="form-group">
+                                                    <input class="form-control" type="text" name="dbl_frame"
+                                                        value="{{dbl_frame}}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class=" mb-3">
+                                        <div class="row">
+                                            <div class="col-md-5 text-right">
+                                                <label class="text-right">B</label>
+                                                <div class="form-group">
+                                                    <input class="form-control" type="text" name="b_frame"
+                                                        value="{{b_frame}}">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-1">
+                                                /
+                                            </div>
+                                            <div class="col-md-5 ">
+                                                <label>ED</label>
+                                                <div class="form-group">
+                                                    <input class="form-control" type="text" name="ed_frame"
+                                                        value="{{ed_frame}}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="col-12 mx-2">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-group my-0">
+                                                    {% if frame_1_50 == 'True' %}
+                                                    <input class="form-check-input" checked type="checkbox"
+                                                        name="frame_1_50">
+                                                    {% else %}
+                                                    <input class="form-check-input" type="checkbox" name="frame_1_50">
+                                                    {% endif %}
+
+                                                    <label class="form-check-label" for="exampleRadios2">
+                                                        1.50
+                                                    </label>
+                                                </div>
+                                                <div class="form-group my-0">
+                                                    {% if frame_Poly == 'True' %}
+                                                    <input class="form-check-input" checked type="checkbox"
+                                                        name="frame_Poly">
+                                                    {% else %}
+                                                    <input class="form-check-input" type="checkbox" name="frame_Poly">
+                                                    {% endif %}
+                                                    <label class="form-check-label" for="exampleRadios2">
+                                                        Poly
+                                                    </label>
+                                                </div>
+                                                <div class="form-group my-0">
+                                                    {% if frame_1_60 == 'True' %}
+                                                    <input class="form-check-input" checked type="checkbox"
+                                                        name="frame_1_60">
+                                                    {% else %}
+                                                    <input class="form-check-input" type="checkbox" name="frame_1_60">
+                                                    {% endif %}
+                                                    <label class="form-check-label" for="exampleRadios2">
+                                                        1.60
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group my-0">
+                                                    {% if frame_1_67 == 'True' %}
+                                                    <input class="form-check-input" checked type="checkbox"
+                                                        name="frame_1_67">
+                                                    {% else %}
+                                                    <input class="form-check-input" type="checkbox" name="frame_1_67">
+                                                    {% endif %}
+                                                    <label class="form-check-label" for="exampleRadios2">
+                                                        1.67
+                                                    </label>
+                                                </div>
+                                                <div class="form-group my-0">
+                                                    {% if frame_1_74 == 'True' %}
+                                                    <input class="form-check-input" checked type="checkbox"
+                                                        name="frame_1_74">
+                                                    {% else %}
+                                                    <input class="form-check-input" type="checkbox" name="frame_1_74">
+                                                    {% endif %}
+                                                    <label class="form-check-label" for="exampleRadios2">
+                                                        1.74
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 mt-3">
+                                                <div class="form-group">
+                                                    <input class="form-control" type="text" placeholder="Other"
+                                                        name="other" value="{{other}}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-6">
+                                    <label>PD</label>
+                                    <div class="col-md-12 mb-3">
+                                        <div class="row">
+                                            <label>Distance</label>
+                                            <div class="col-md-5 ">
+                                                <div class="form-group">
+                                                    <input class="form-control" type="text" name="dis_num"
+                                                        value="{{dis_num}}">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-1 ">
+                                                <div class="form-group">
+                                                    <h3>/</h3>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-5 ">
+                                                <div class="form-group">
+                                                    <input class="form-control" type="text" name="dis_deno"
+                                                        value="{{dis_deno}}">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-12 mb-3">
+                                        <div class="row">
+                                            <label>Near</label>
+                                            <div class="col-md-5 ">
+                                                <div class="form-group">
+                                                    <input class="form-control" type="text" name="near_num"
+                                                        value="{{near_num}}">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-1">
+                                                <div class="form-group">
+                                                    <h3>/</h3>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-5 ">
+                                                <div class="form-group">
+                                                    <input class="form-control" type="text" name="near_deno"
+                                                        value="{{near_deno}}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-6">
+                                    <label>Coatings</label>
+                                    <div class="mx-3">
+                                        <div class="form-group my-0">
+                                            {% if uv400 == 'True' %}
+                                            <input class="form-check-input" checked type="checkbox" name="uv400">
+                                            {% else %}
+                                            <input class="form-check-input" type="checkbox" name="uv400">
+                                            {% endif %}
+
+                                            <label class="form-check-label" for="exampleRadios2">
+                                                UV400
+                                            </label>
+                                        </div>
+                                        <div class="form-group my-0">
+                                            {% if anti_scratch == 'True' %}
+                                            <input class="form-check-input" checked type="checkbox" name="anti_scratch">
+                                            {% else %}
+                                            <input class="form-check-input" type="checkbox" name="anti_scratch">
+                                            {% endif %}
+
+                                            <label class="form-check-label" for="exampleRadios2">
+                                                Anti-Scratch
+                                            </label>
+                                        </div>
+                                        <div class="form-group my-0">
+                                            {% if anti_reflective == 'True' %}
+                                            <input class="form-check-input" checked type="checkbox"
+                                                name="anti_reflective">
+                                            {% else %}
+                                            <input class="form-check-input" type="checkbox" name="anti_reflective">
+                                            {% endif %}
+
+                                            <label class="form-check-label" for="exampleRadios2">
+                                                Anti-Reflective
+                                            </label>
+                                        </div>
+                                        <div class="form-group my-0">
+                                            {% if blue_block == 'True' %}
+                                            <input class="form-check-input" checked type="checkbox" name="blue_block">
+                                            {% else %}
+                                            <input class="form-check-input" type="checkbox" name="blue_block">
+                                            {% endif %}
+
+                                            <label class="form-check-label" for="exampleRadios2">
+                                                Blue-block
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <table class="table table-bordered text-center col-12">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Sphere</th>
+                                            <th scope="col">Cyl</th>
+                                            <th scope="col">Axis</th>
+                                            <th scope="col">Prism/Base</th>
+                                            <th scope="col">Add</th>
+                                            <th scope="col">Height</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">OD</th>
+                                            <td>{{od_sphere}}</td>
+                                            <td> {{od_cyl}}
+                                            </td>
+                                            <td>{{od_axis}}
+                                            </td>
+                                            <td> {{od_prism_b}}</td>
+                                            <td> {{od_add}}
+                                            </td>
+                                            <td> {{od_height}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">OS</th>
+                                            <td>{{os_sphere}}</td>
+                                            <td> {{os_cyl}}
+                                            </td>
+                                            <td>{{os_axis}}
+                                            </td>
+                                            <td> {{os_prism_b}}</td>
+                                            <td> {{os_add}}
+                                            </td>
+                                            <td> {{os_height}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Tint</label>
+                                        <input class="form-control" type="text" name="tint" value="{{tint}}">
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div>
+                                            <div class="form-group">
+                                                <label>SV</label>
+                                                <input class="form-control" type="text" name="sv" value="{{sv}}">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="form-group">
+                                                <label>Bifocal Style</label>
+                                                <input class="form-control" type="text" name="bifocal"
+                                                    value="{{bifocal}}">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="form-group">
+                                                <label>Progressive</label>
+                                                <input class="form-control" type="text" name="progressive"
+                                                    value="{{progressive}}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div>
+                                            <div class="form-group">
+                                                <label>Special Instruction</label>
+                                                <textarea class="form-control" type="text" rows="8"
+                                                    name="instruction">{{instruction}}</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </form>
+</main>
+<script>
+
+    function getPrice() {
+        const price = document.getElementById("price");
+        const get_price = document.getElementById("get_price");
+
+        const inputHandler = function (e) {
+            get_price.value = e.target.value;
+        }
+
+        price.addEventListener('input', inputHandler);
+        price.addEventListener('propertychange', inputHandler);
+    }
+    function getDue() {
+        const due = document.getElementById("due");
+        const amount = document.getElementById("amount");
+        const get_price = document.getElementById("get_price");
+
+        var due_value;
+        const inputHandler = function (e) {
+            due_value = get_price.value - amount.value
+            due.value = due_value;
+        }
+
+        amount.addEventListener('input', inputHandler);
+        amount.addEventListener('propertychange', inputHandler);
+    }
+    function getToday() {
+        const get_date = document.getElementById("date_created");
+        var utc = new Date().toLocaleDateString();
+        get_date.value = utc;
+    }
+
+
+    if ($("#order_type").val() == 'Glasses') {
+        $("#glasses").css({
+            display: "block",
+            visibility: "visible"
+        });
+        $("#dispense").css({
+            display: "block",
+            visibility: "visible"
+        });
+        $("#product").css({
+            display: "none",
+            visibility: "hidden"
+        });
+    } else if ($("#order_type").val() == 'Product') {
+        $("#product").css({
+            display: "block",
+            visibility: "visible"
+        });
+        $("#glasses").css({
+            display: "none",
+            visibility: "hidden"
+        });
+        $("#dispense").css({
+            display: "none",
+            visibility: "hidden"
+        });
+    } else {
+        $("#glasses").css({
+            display: "none",
+            visibility: "hidden"
+        });
+        $("#dispense").css({
+            display: "none",
+            visibility: "hidden"
+        });
+        $("#product").css({
+            display: "none",
+            visibility: "hidden"
+        });
+    }
+
+    getPrice()
+    getDue()
+    getToday()
+    show()
+
+
+    $("#formsel").change(function () {
+        const type = document.getElementById("type").value;
+        if (type == 'Glasses') {
+            $("#glasses").css({
+                display: "block",
+                visibility: "visible"
+            });
+            $("#dispense").css({
+                display: "block",
+                visibility: "visible"
+            });
+            $("#product").css({
+                display: "none",
+                visibility: "hidden"
+            });
+        } else if (type == 'Product') {
+            $("#product").css({
+                display: "block",
+                visibility: "visible"
+            });
+            $("#glasses").css({
+                display: "none",
+                visibility: "hidden"
+            });
+            $("#dispense").css({
+                display: "none",
+                visibility: "hidden"
+            });
+        } else {
+            $("#glasses").css({
+                display: "none",
+                visibility: "hidden"
+            });
+            $("#dispense").css({
+                display: "none",
+                visibility: "hidden"
+            });
+            $("#product").css({
+                display: "none",
+                visibility: "hidden"
+            });
+        }
+    });
+
+    document.querySelector("#search-input").addEventListener('input', filterList);
+    function filterList() {
+        const searchInput = document.querySelector("#search-input");
+        const filter = searchInput.value.toLowerCase();
+        const listItems = document.querySelectorAll('.item');
+
+        listItems.forEach((item) => {
+            let text = item.textContent
+            if (text.toLowerCase().includes(filter.toLowerCase())) {
+                item.style.display = '';
+            } else {
+                item.style.display = 'none';
+            }
+            item.addEventListener("click", function () { myClick() });
+        });
+    }
+
+    function myClick(x) {
+
+        alert($('.num-' + '{{patient.id}}').text())
+    }
+
+</script>
+{% endblock %}
